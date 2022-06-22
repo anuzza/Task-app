@@ -2,12 +2,12 @@
 import react ,{useState, useEffect, useCallback} from "react";
 
 
-const useFetch = (requestConfig, applyData)=>{
+const useFetch = ( applyData)=>{
     
 const [isLoading, setIsLoading] = useState(false);
 const [error, setError] = useState(null);
 
-const sendRequest =  useCallback( async () => {
+const sendRequest =  useCallback( async (requestConfig) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -35,7 +35,7 @@ const sendRequest =  useCallback( async () => {
       setError(err.message || 'Something went wrong!');
     }
     setIsLoading(false);
-}, [requestConfig, applyData]);
+}, [applyData]);
 
  return {
     isLoading: isLoading,
