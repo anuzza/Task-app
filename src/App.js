@@ -7,7 +7,15 @@ import useFetch from './hooks/useFetch';
 function App() {
    const [tasks, setTasks] = useState([]);
 
-  const transformTasks = useCallback( tasksObj =>{
+  
+
+  const {isLoading, error, sendRequest: fetchTasks} = useFetch();
+
+  
+
+  useEffect(() => {
+
+    const transformTasks =  tasksObj =>{
     const loadedTasks = [];
 
       for (const taskKey in tasksObj) {
@@ -16,14 +24,10 @@ function App() {
 
       setTasks(loadedTasks);
     
-  },[]);
+  };
 
-  const {isLoading, error, sendRequest: fetchTasks} = useFetch(transformTasks);
 
-  
-
-  useEffect(() => {
-    fetchTasks({url:'https://react-http-76fdb-default-rtdb.firebaseio.com//tasks.json'});
+    fetchTasks({url:'https://react-http-76fdb-default-rtdb.firebaseio.com//tasks.json'}, transformTasks);
   }, [fetchTasks]);
 
   const taskAddHandler = (task) => {
